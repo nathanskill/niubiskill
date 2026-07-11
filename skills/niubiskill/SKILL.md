@@ -1,11 +1,11 @@
 ---
 name: niubiskill
-description: Turn something the user already knows, does, owns, or can legitimately access into one concrete monetization move using Nathan's ABCD — Acquisition, Bargaining, Customer Care, and Development. Use when a user asks what to sell, who may pay, how to acquire customers, how to close, why an existing skill/product/relationship/channel/community/job/open-source project is not making money, or what single action to take next. For simple direct sales, stay simple; when the user, beneficiary, decision-maker, payer, or risk bearer differ, map value, money, power, and information before recommending action. 适用于“我会做这件事但怎么变现、卖什么、卖给谁、怎么获客、怎么成交、怎么维护客户、怎么设计合作、为什么有价值却收不到钱”等中文请求。不用于投资建议、收益预测、泛泛励志或没有任何现有资源的暴富项目推荐。
+description: A universal monetization skill that turns any existing ability, experience, product, resource, relationship, audience, business, or idea into one concrete money-making move using Nathan's ABCD — Acquisition, Bargaining, Customer Care, and Development. Use when anyone asks what to sell, who may pay, where to find customers, how to close, retain, repeat, or scale, why something valuable is not making money, or what single action to take next. Keep simple sales simple; map value, money, power, and information only when different people use, decide, pay, deliver, or bear risk. 面向任何想把能力、经验、产品、资源或想法变现的人；适用于“怎么从0开始赚钱、怎么走向1000w、卖什么、卖给谁、怎么获客、怎么成交、怎么复购、为什么有价值却收不到钱”等请求。不用于投资建议、收益预测、泛泛励志或暴富保证。
 ---
 
 # NIUBI Skill
 
-让用户正在做、已经会做或已经拥有的东西，开始变现。
+蒸馏全行业TOP1，打开0到1000w赚钱之路。
 
 ## 核心公式
 
@@ -17,6 +17,8 @@ description: Turn something the user already knows, does, owns, or can legitimat
 - **B — Bargaining：** 推进成交；
 - **C — Customer Care：** 服务和维护客户，让价值与收入继续发生；
 - **D — Development：** 持续开发产品、案例、内容、工具和能力，为下一次获客与成交准备弹药。
+
+面向任何拥有能力、经验、产品、资源或想法的人，不根据职业、行业、年龄、地区或当前收入预设使用门槛。“0到1000w”表示从第一次付费验证到可复制增长的全阶段视角，不是收入承诺；始终用ABCD判断当前唯一瓶颈和下一动作。
 
 不要先给商业理论或大而全报告。每次先帮用户说清四件事：
 
@@ -52,7 +54,7 @@ description: Turn something the user already knows, does, owns, or can legitimat
 
 ## 按需读取参考资料
 
-- 遇到三方以上、付款者与受益者不同、客户经理/经纪/平台/渠道角色、分润或“被绕开”问题时，读取 [commercial-loop.md](references/commercial-loop.md)。
+- 遇到三方以上、付款者与受益者不同、介绍/平台/渠道合作、分润或“被绕开”问题时，读取 [commercial-loop.md](references/commercial-loop.md)。
 - 遇到雇佣冲突、客户或第三方资料、数据、版权、平台规则、跨境、金融/医疗/法律等受监管活动、收益宣传、资源匹配或公开案例时，读取 [evidence-and-boundaries.md](references/evidence-and-boundaries.md)。
 
 ## 执行工作流
@@ -102,7 +104,7 @@ description: Turn something the user already knows, does, owns, or can legitimat
 
 ### 5. 选择用户的主位置
 
-本轮只选一个主位置：创业者/主体、销售/客户经理、经纪/介绍人、平台/组织者、产品/服务方、渠道伙伴、内容/开源作者。
+不要先给用户贴职业标签。本轮只按实际功能选择一个主位置，例如主体、销售推动者、介绍人、组织者、产品/服务方、合作伙伴或内容/开源方。
 
 必须写清：
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "NIUBI Skill"
-  short_description: "让你会做的事情开始赚钱：用ABCD做获客与成交"
-  default_prompt: "Use $niubiskill to turn what I already know, do, or have into one concrete customer-acquisition or closing action using ABCD."
+  short_description: "蒸馏全行业TOP1，用ABCD打开0到1000w赚钱之路"
+  default_prompt: "Use $niubiskill to turn what I can do or already have into an ABCD monetization path and one concrete action for this week."

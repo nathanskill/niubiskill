@@ -143,12 +143,24 @@ def main() -> None:
             fail(f"scenario needs positive and negative criteria: {scenario['id']}")
 
     text_extensions = {".md", ".yaml", ".yml", ".json", ".cff", ".py", ""}
+    forbidden_narrow_terms = [
+        "客户" + "经理",
+        "account" + " manager",
+        "account" + "-manager",
+    ]
     for path in ROOT.rglob("*"):
+        relative = path.relative_to(ROOT).as_posix()
+        for term in forbidden_narrow_terms:
+            if term.casefold() in relative.casefold():
+                fail(f"narrow audience term found in path: {relative}")
         if path.is_file() and ".git" not in path.parts and path.suffix in text_extensions:
             content = path.read_text(encoding="utf-8", errors="ignore")
             forbidden_identifier = "niubi" + "-skill"
             if forbidden_identifier.casefold() in content.casefold():
                 fail(f"hyphenated project identifier found in {path.relative_to(ROOT)}")
+            for term in forbidden_narrow_terms:
+                if term.casefold() in content.casefold():
+                    fail(f"narrow audience term found in {relative}")
 
     print(f"PASS: niubiskill repository validation succeeded ({len(scenarios)} scenarios).")
 
