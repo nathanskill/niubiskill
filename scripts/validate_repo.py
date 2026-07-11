@@ -101,8 +101,8 @@ def main() -> None:
         fail("root and installable-package NOTICE files must be identical")
 
     version = read(ROOT / "VERSION").strip()
-    if version != "0.1.0":
-        fail("VERSION must be 0.1.0 for the first release")
+    if not re.fullmatch(r"\d+\.\d+\.\d+", version):
+        fail("VERSION must use semantic version format such as 0.1.1")
     if f'version: "{version}"' not in read(ROOT / "CITATION.cff"):
         fail("CITATION.cff version must match VERSION")
 

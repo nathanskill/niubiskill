@@ -1,11 +1,29 @@
 ---
 name: niubiskill
-description: Map an existing business situation as roles plus value, money, power, and information flows; identify where the user can legitimately capture value; choose the current Acquisition, Bargaining, Customer Care, or Development bottleneck; and produce one seven-day commitment experiment. Use when a user asks how to monetize an existing skill, product, relationship, channel, community, job, open-source project, or business; when the beneficiary, decision-maker, payer, or risk bearer may be different people; or when acquisition, closing, retention, partnerships, resource matching, and business-model bottlenecks need one concrete next move. 适用于“怎么赚钱、怎么获客、怎么成交、怎么设计合作、为什么有价值却收不到钱、客户经理或中间人如何创造并捕获价值”等中文请求。不用于投资建议、收益预测、泛泛励志或没有任何现有资源的暴富项目推荐。
+description: Turn something the user already knows, does, owns, or can legitimately access into one concrete monetization move using Nathan's ABCD — Acquisition, Bargaining, Customer Care, and Development. Use when a user asks what to sell, who may pay, how to acquire customers, how to close, why an existing skill/product/relationship/channel/community/job/open-source project is not making money, or what single action to take next. For simple direct sales, stay simple; when the user, beneficiary, decision-maker, payer, or risk bearer differ, map value, money, power, and information before recommending action. 适用于“我会做这件事但怎么变现、卖什么、卖给谁、怎么获客、怎么成交、怎么维护客户、怎么设计合作、为什么有价值却收不到钱”等中文请求。不用于投资建议、收益预测、泛泛励志或没有任何现有资源的暴富项目推荐。
 ---
 
 # NIUBI Skill
 
-把散落的关系、信息和能力组织成可验证的商业闭环。
+让用户正在做、已经会做或已经拥有的东西，开始变现。
+
+## 核心公式
+
+> **获客 + 成交 = 赚钱**
+
+底层使用 Nathan 的 ABCD：
+
+- **A — Acquisition：** 找到客户；
+- **B — Bargaining：** 推进成交；
+- **C — Customer Care：** 服务和维护客户，让价值与收入继续发生；
+- **D — Development：** 持续开发产品、案例、内容、工具和能力，为下一次获客与成交准备弹药。
+
+不要先给商业理论或大而全报告。每次先帮用户说清四件事：
+
+1. 现在最适合卖什么；
+2. 谁最可能为什么结果付钱；
+3. 从哪个有权使用的入口找到他；
+4. 七天内怎样推进一次可验证的真实成交。
 
 ## 只交付一个结果
 
@@ -13,11 +31,11 @@ description: Map an existing business situation as roles plus value, money, powe
 
 > **一张最小商业闭环卡 + 一个七天承诺实验。实验内只包含一个可立即使用的行动资产。**
 
-不要默认商业等于“找到一个人，把东西卖给他”。先判断受益者、使用者、决策者、付款者、分配者和风险承担者是否为同一主体。简单直销就保持简单；多方系统才展开多方分析。
+默认先尝试用简单直销解释和行动。只有当受益者、使用者、决策者、付款者、分配者或风险承担者不是同一主体时，才展开多方商业闭环分析。简单直销就保持简单；复杂模型只在会改变决定时使用。
 
 使用以下第一性原理：
 
-> 赚钱始于发现价值差异，成于信任、匹配、协调与履约，终于合法、可执行的价值分配。
+> 能力不是生意。找到愿意为结果付钱的人，并推动一次真实成交，能力才开始变现。
 
 ## 遵守不变量
 

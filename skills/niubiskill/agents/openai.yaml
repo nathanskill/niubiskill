@@ -1,4 +1,4 @@
 interface:
   display_name: "NIUBI Skill"
-  short_description: "看清多方商业闭环，找到合法价值位置并完成一次七天验证"
-  default_prompt: "Use $niubiskill to map my business roles and four flows, run the permission gate, then return exactly one loop card and one seven-day commitment experiment."
+  short_description: "让你会做的事情开始赚钱：用ABCD做获客与成交"
+  default_prompt: "Use $niubiskill to turn what I already know, do, or have into one concrete customer-acquisition or closing action using ABCD."
