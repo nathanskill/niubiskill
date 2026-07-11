@@ -1,0 +1,47 @@
+name: 合成场景建议
+description: 提交一个跨行业、不可识别的合成场景和验收标准
+title: "[Scenario] "
+labels:
+  - scenario
+body:
+  - type: markdown
+    attributes:
+      value: |
+        不要把真实经历仅替换姓名后提交。场景必须是跨行业合成结构，且不能包含真实主体、联系方式、收入、聊天记录或内部流程。
+  - type: textarea
+    id: prompt
+    attributes:
+      label: 合成输入
+      description: 用最少信息描述角色、目标和限制。
+    validations:
+      required: true
+  - type: textarea
+    id: must
+    attributes:
+      label: 必须做到
+      description: 列出可验证行为，不要求逐字输出。
+    validations:
+      required: true
+  - type: textarea
+    id: must_not
+    attributes:
+      label: 绝对不能做
+      description: 列出错误合并、越权、夸大或不安全行为。
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence
+    attributes:
+      label: 证据状态
+      options:
+        - SYNTHETIC / 合成
+        - 已核验公开来源
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 提交确认
+      options:
+        - label: 我确认此场景不可反向识别任何真实个人、客户、雇主或项目。
+          required: true

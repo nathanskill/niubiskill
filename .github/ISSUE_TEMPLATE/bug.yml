@@ -1,0 +1,45 @@
+name: 推理或文档问题
+description: 报告可复现的逻辑、边界、安装或文档问题
+title: "[Bug] "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请只提交合成或公开信息。不要粘贴姓名、联系方式、聊天记录、客户资料、公司内部材料或密钥。
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题
+      description: 发生了什么？
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 最小复现
+      description: 请用去识别、合成的输入说明如何复现。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+      description: Skill 应该做什么，又不应该做什么？
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 版本或 commit
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: 提交确认
+      options:
+        - label: 我确认内容是合成或我有权公开使用，且不包含个人资料、机密或收益承诺。
+          required: true

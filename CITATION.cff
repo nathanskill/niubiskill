@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: "NIUBI Skill"
+message: "If you use NIUBI Skill in research or public work, please cite this repository."
+type: software
+authors:
+  - family-names: "Yu"
+    given-names: "Zhennan"
+    alias: "Nathan Yu"
+version: "0.1.0"
+date-released: "2026-07-12"
+repository-code: "https://github.com/nathanskill/niubiskill"
+url: "https://github.com/nathanskill/niubiskill"
+license: "Apache-2.0"
