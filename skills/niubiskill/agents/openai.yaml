@@ -1,4 +1,4 @@
 interface:
   display_name: "NIUBI Skill"
-  short_description: "把项目丢进来，找到赚钱点，并判断现在先引流还是先成交"
-  default_prompt: "使用 $niubiskill 帮我找这个项目的赚钱点：最多给出3个，只推荐1个，判断先引流还是先成交，并给我一份可以直接使用的材料和一次七天验证。"
+  short_description: "把项目丢进来，只给一个离真实收钱最近的赚钱点和本周动作"
+  default_prompt: "使用 $niubiskill 帮我找这个项目的赚钱点：后台比较候选，直接给我一个结论、一条当前路线、一个本周动作、一份能马上使用的材料和一个七天证据事件。"

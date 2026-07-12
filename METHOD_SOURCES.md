@@ -52,7 +52,23 @@ DBskill 本地公开版本采用 `CC BY-NC 4.0`。NIUBI Skill 因此坚持 clean
 
 两者解决的问题也不同：DBskill 的公开优势是作者思想、诊断与内容工具箱；NIUBI Skill 只做一个任务——为具体项目匹配、比较并验证赚钱点，判断当前先引流还是先成交。
 
-## 4. 证据边界
+## 4. 相邻公开 Skill 的取舍
+
+本项目还把以下公开仓库作为相邻设计参考。学习对象是可观察的工程原则，不复制其文本、模板、案例、私有资料或独特编排：
+
+| 公开项目 | NIUBI Skill吸收什么 | 本项目边界 |
+|---|---|---|
+| [Corey Haines Marketing Skills](https://github.com/coreyhaines31/marketingskills/blob/main/skills/product-marketing/SKILL.md) 与其 [Sales Enablement](https://github.com/coreyhaines31/marketingskills/blob/main/skills/sales-enablement/SKILL.md) | 复用项目上下文、优先使用客户原话、只追问缺口、让销售材料可快速扫描 | 不扩张成营销工具箱，不导入任何预置行业数字 |
+| [sales-skills/sales](https://github.com/sales-skills/sales) | 单一入口与“信息够用就行动” | 让用户进入多层路由或维护庞大工具目录 |
+| [Rebecca Rae Claude Marketing](https://github.com/thatrebeccarae/claude-marketing) 与其 [Market Research](https://github.com/thatrebeccarae/claude-marketing/blob/main/skills/market-research/SKILL.md) | 核心说明、参考资料和案例分层；重要断言保留来源 | 不默认生成多页报告或无来源评分 |
+| [phuryn/pm-skills](https://github.com/phuryn/pm-skills/blob/main/pm-product-discovery/skills/brainstorm-experiments-new/SKILL.md) 与其 [Monetization Strategy](https://github.com/phuryn/pm-skills/blob/main/pm-product-strategy/skills/monetization-strategy/SKILL.md) | 用预售、订金、明确价格接受等真实行为验证需求 | 不在没有基线时估算成功率、CAC、LTV或市场规模 |
+| [Anthropic Skill Creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md) | 主 Skill 保持简洁、按需加载、新旧版盲测和正负触发测试 | 开发期评测不进入每次用户输出 |
+
+这些项目大多分别解决营销、销售、研究、产品发现或 Skill 工程。NIUBI Skill不试图覆盖它们；它只做决策压缩：`一个项目 → 一个赚钱点 → 一条路线 → 一份材料 → 一个短期证据`。
+
+任何外部项目中的通用价格、转化率、回复率、样本量、时间表或成功阈值，都不能直接成为 NIUBI Skill 的事实。关键商业数字必须来自用户或当前证据、透明推导，或明确标为本轮实验参数。
+
+## 5. 证据边界
 
 当前公开版本证明的是：
 

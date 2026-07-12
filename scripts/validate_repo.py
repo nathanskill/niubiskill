@@ -56,6 +56,7 @@ def main() -> None:
         ROOT / "CHANGELOG.md",
         ROOT / "CITATION.cff",
         ROOT / "VERSION",
+        ROOT / "tests" / "README.md",
         SKILL / "SKILL.md",
         SKILL / "LICENSE",
         SKILL / "NOTICE",
@@ -77,8 +78,8 @@ def main() -> None:
     description = frontmatter["description"]
     if not description or len(description) > 1024 or "<" in description or ">" in description:
         fail("skill description must be non-empty, at most 1024 characters, and contain no angle brackets")
-    if len(skill_text.splitlines()) > 500:
-        fail("SKILL.md must stay under 500 lines")
+    if len(skill_text.splitlines()) > 120:
+        fail("SKILL.md must stay under 120 lines; move optional detail to references")
 
     openai_yaml = read(SKILL / "agents" / "openai.yaml")
     if '$niubiskill' not in openai_yaml:
@@ -107,13 +108,32 @@ def main() -> None:
         if f"]({relative})" not in skill_text:
             fail(f"SKILL.md must link to {relative}")
 
-    legacy_outputs = ("## A. 商业" + "闭环卡", "## B. 七天" + "承诺实验")
-    if "# NIUBI 赚钱点卡" not in skill_text:
-        fail("SKILL.md must enforce the single NIUBI 赚钱点卡 output")
+    legacy_outputs = (
+        "## A. 商业" + "闭环卡",
+        "## B. 七天" + "承诺实验",
+        "## 一句话答案",
+        "## 项目底牌与信息状态",
+        "## 候选赚钱点",
+        "## 唯一推荐",
+        "## 七天验证",
+        "## 本轮暂不测试",
+    )
+    if "# NIUBI 赚钱点" not in skill_text:
+        fail("SKILL.md must enforce the concise NIUBI monetization output")
     if any(heading in skill_text for heading in legacy_outputs):
-        fail("legacy two-block output must not remain in SKILL.md")
-    if "当前路线：引流 / 成交 / 暂停" not in skill_text:
+        fail("legacy verbose output headings must not remain in SKILL.md")
+    if "**现在：** 引流 / 成交 / 暂停" not in skill_text:
         fail("SKILL.md must choose exactly one acquisition, closing, or pause route")
+    for snippet in (
+        "后台最多比较三个候选，前台只展开赢家",
+        "证据值",
+        "推导值",
+        "实验参数",
+        "不能证明整个市场",
+        "闸门判断的是`下一步具体外部动作`",
+    ):
+        if snippet not in skill_text:
+            fail(f"SKILL.md is missing a concise decision-discipline rule: {snippet}")
 
     patterns_text = read(SKILL / "references" / "monetization-patterns.md")
     if "## 新商业模式内容卡" not in patterns_text or "公开来源与日期" not in patterns_text:
@@ -152,17 +172,19 @@ def main() -> None:
         text = read(path)
         if "SYNTHETIC / 合成" not in text:
             fail(f"example lacks synthetic label: {path.name}")
-        if text.count("# NIUBI 赚钱点卡") != 1:
-            fail(f"example lacks the v0.2 single-card output: {path.name}")
+        if text.count("# NIUBI 赚钱点") != 1:
+            fail(f"example lacks the concise single-card output: {path.name}")
+        if len(text.splitlines()) > 60:
+            fail(f"example is too long for the concise default output: {path.name}")
         if any(heading in text for heading in legacy_outputs):
-            fail(f"example still contains the legacy two-block output: {path.name}")
+            fail(f"example still contains a legacy verbose heading: {path.name}")
         for term in banned_case_terms:
             if term.casefold() in text.casefold():
                 fail(f"example contains a prohibited real-industry/project term: {path.name}: {term}")
 
     scenarios = json.loads(read(ROOT / "tests" / "scenarios.json"))
-    if len(scenarios) < 10:
-        fail("at least ten behavioral scenarios are required")
+    if len(scenarios) < 17:
+        fail("at least seventeen behavioral scenarios are required")
     ids: set[str] = set()
     for scenario in scenarios:
         if set(scenario) != {"id", "prompt", "must", "must_not"}:
@@ -172,6 +194,16 @@ def main() -> None:
         ids.add(scenario["id"])
         if not scenario["must"] or not scenario["must_not"]:
             fail(f"scenario needs positive and negative criteria: {scenario['id']}")
+    required_scenarios = {
+        "T12-no-fake-price-scarcity",
+        "T13-derived-capacity-reconciles",
+        "T14-arbitrary-threshold-cannot-kill",
+        "T15-assumption-does-not-become-claim",
+        "T16-gate-the-action-not-project",
+        "T17-repeat-run-calibration",
+    }
+    if not required_scenarios.issubset(ids):
+        fail("behavior tests must cover numbers, assertions, action gating, and calibration")
 
     text_extensions = {".md", ".yaml", ".yml", ".json", ".cff", ".py", ""}
     forbidden_narrow_terms = [
@@ -193,7 +225,10 @@ def main() -> None:
                 if term.casefold() in content.casefold():
                     fail(f"narrow audience term found in {relative}")
 
-    print(f"PASS: niubiskill repository validation succeeded ({len(scenarios)} scenarios).")
+    print(
+        "PASS: niubiskill repository structure and "
+        f"{len(scenarios)} behavioral scenario specifications validated."
+    )
 
 
 if __name__ == "__main__":
