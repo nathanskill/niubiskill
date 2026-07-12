@@ -60,6 +60,7 @@ def main() -> None:
         SKILL / "LICENSE",
         SKILL / "NOTICE",
         SKILL / "agents" / "openai.yaml",
+        SKILL / "references" / "monetization-patterns.md",
         SKILL / "references" / "commercial-loop.md",
         SKILL / "references" / "evidence-and-boundaries.md",
         ROOT / "tests" / "scenarios.json",
@@ -73,6 +74,9 @@ def main() -> None:
         fail("SKILL.md frontmatter must contain only name and description")
     if frontmatter["name"] != "niubiskill":
         fail("skill name must be exactly niubiskill")
+    description = frontmatter["description"]
+    if not description or len(description) > 1024 or "<" in description or ">" in description:
+        fail("skill description must be non-empty, at most 1024 characters, and contain no angle brackets")
     if len(skill_text.splitlines()) > 500:
         fail("SKILL.md must stay under 500 lines")
 
@@ -81,16 +85,39 @@ def main() -> None:
         fail("agents/openai.yaml default_prompt must contain $niubiskill")
     if not re.search(r'display_name:\s*"NIUBI Skill"', openai_yaml):
         fail("agents/openai.yaml display_name must be NIUBI Skill")
+    short_match = re.search(r'short_description:\s*"([^"]+)"', openai_yaml)
+    if not short_match or not 25 <= len(short_match.group(1)) <= 64:
+        fail("agents/openai.yaml short_description must be 25-64 characters")
+
+    readme_text = read(ROOT / "README.md")
+    for snippet in (
+        "## 3步，找到离钱最近的赚钱点",
+        "npx -y skills add nathanskill/niubiskill -g --all",
+        "$niubiskill https://你的项目网址",
+        "你只需要描述项目",
+    ):
+        if snippet not in readme_text:
+            fail(f"README.md is missing the simple first-use path: {snippet}")
 
     for relative in (
+        "references/monetization-patterns.md",
         "references/commercial-loop.md",
         "references/evidence-and-boundaries.md",
     ):
         if f"]({relative})" not in skill_text:
             fail(f"SKILL.md must link to {relative}")
 
-    if "## A. 商业闭环卡" not in skill_text or "## B. 七天承诺实验" not in skill_text:
-        fail("SKILL.md must enforce exactly the two named top-level output blocks")
+    legacy_outputs = ("## A. 商业" + "闭环卡", "## B. 七天" + "承诺实验")
+    if "# NIUBI 赚钱点卡" not in skill_text:
+        fail("SKILL.md must enforce the single NIUBI 赚钱点卡 output")
+    if any(heading in skill_text for heading in legacy_outputs):
+        fail("legacy two-block output must not remain in SKILL.md")
+    if "当前路线：引流 / 成交 / 暂停" not in skill_text:
+        fail("SKILL.md must choose exactly one acquisition, closing, or pause route")
+
+    patterns_text = read(SKILL / "references" / "monetization-patterns.md")
+    if "## 新商业模式内容卡" not in patterns_text or "公开来源与日期" not in patterns_text:
+        fail("monetization pattern library must include the reusable public content-card schema")
 
     if (SKILL / "README.md").exists():
         fail("the installable skill package must not contain README.md")
@@ -125,6 +152,10 @@ def main() -> None:
         text = read(path)
         if "SYNTHETIC / 合成" not in text:
             fail(f"example lacks synthetic label: {path.name}")
+        if text.count("# NIUBI 赚钱点卡") != 1:
+            fail(f"example lacks the v0.2 single-card output: {path.name}")
+        if any(heading in text for heading in legacy_outputs):
+            fail(f"example still contains the legacy two-block output: {path.name}")
         for term in banned_case_terms:
             if term.casefold() in text.casefold():
                 fail(f"example contains a prohibited real-industry/project term: {path.name}: {term}")
