@@ -92,13 +92,22 @@ def main() -> None:
 
     readme_text = read(ROOT / "README.md")
     for snippet in (
+        "你不是缺生产力，你是忘了赚钱",
+        "## 它只做两件事",
         "## 3步，找到离钱最近的赚钱点",
         "npx -y skills add nathanskill/niubiskill -g --all",
         "$niubiskill https://你的项目网址",
         "你只需要描述项目",
+        "约7万注册用户",
+        "千万体量行业矩阵",
+        "QQ：78396640",
+        "微信：cncn0214",
     ):
         if snippet not in readme_text:
-            fail(f"README.md is missing the simple first-use path: {snippet}")
+            fail(f"README.md is missing required public content: {snippet}")
+    for private_name in ("Zhennan", "于振楠"):
+        if private_name in readme_text:
+            fail(f"README.md must use the public author name Nathan only: {private_name}")
 
     for relative in (
         "references/monetization-patterns.md",
@@ -118,26 +127,41 @@ def main() -> None:
         "## 七天验证",
         "## 本轮暂不测试",
     )
-    if "# NIUBI 赚钱点" not in skill_text:
-        fail("SKILL.md must enforce the concise NIUBI monetization output")
+    if "# NIUBI 赚钱纠偏" not in skill_text:
+        fail("SKILL.md must enforce the concise NIUBI correction output")
     if any(heading in skill_text for heading in legacy_outputs):
         fail("legacy verbose output headings must not remain in SKILL.md")
-    if "**现在：** 引流 / 成交 / 暂停" not in skill_text:
-        fail("SKILL.md must choose exactly one acquisition, closing, or pause route")
+    if "**现在：** 先停" not in skill_text or "引流 / 成交 / 暂停" not in skill_text:
+        fail("SKILL.md must stop one distraction and choose one route")
     for snippet in (
-        "后台最多比较三个候选，前台只展开赢家",
+        "## 双核心",
+        "### 1. 先打断生产惯性",
+        "只有具体付款方提出明确阻塞",
+        "不默认做内容",
+        "请求当下可行的最高一级",
+        "只有第一层是收钱证据",
         "证据值",
         "推导值",
         "实验参数",
+        "不能凭空创造价格、人数、目标资格、渠道、联系人、产能或交付范围",
+        "不得擅自把软件改造成咨询、人工服务或其他新商品",
         "不能证明整个市场",
-        "闸门判断的是`下一步具体外部动作`",
+        "闸门只判断`下一步具体外部动作`",
     ):
         if snippet not in skill_text:
-            fail(f"SKILL.md is missing a concise decision-discipline rule: {snippet}")
+            fail(f"SKILL.md is missing a concise correction rule: {snippet}")
 
     patterns_text = read(SKILL / "references" / "monetization-patterns.md")
-    if "## 新商业模式内容卡" not in patterns_text or "公开来源与日期" not in patterns_text:
+    if "## 新获利模式内容卡" not in patterns_text or "公开来源与日期" not in patterns_text:
         fail("monetization pattern library must include the reusable public content-card schema")
+    for snippet in (
+        "可联系付款方 → 问题确认 → 明确报价 → 有成本承诺 → 到账 / 复购",
+        "结果付费 / 收益分成",
+        "预售 / 众筹",
+        "当下可请求的最高级证据",
+    ):
+        if snippet not in patterns_text:
+            fail(f"monetization pattern library is missing coverage or validation logic: {snippet}")
 
     if (SKILL / "README.md").exists():
         fail("the installable skill package must not contain README.md")
@@ -150,8 +174,16 @@ def main() -> None:
     version = read(ROOT / "VERSION").strip()
     if not re.fullmatch(r"\d+\.\d+\.\d+", version):
         fail("VERSION must use semantic version format such as 0.1.1")
-    if f'version: "{version}"' not in read(ROOT / "CITATION.cff"):
+    citation_text = read(ROOT / "CITATION.cff")
+    if f'version: "{version}"' not in citation_text:
         fail("CITATION.cff version must match VERSION")
+    release_date_match = re.search(r'date-released:\s*"(\d{4}-\d{2}-\d{2})"', citation_text)
+    if not release_date_match:
+        fail("CITATION.cff must contain an ISO date-released")
+    changelog_text = read(ROOT / "CHANGELOG.md")
+    release_heading = f"## {version} — {release_date_match.group(1)}"
+    if release_heading not in changelog_text:
+        fail("CHANGELOG release heading must match VERSION and CITATION date-released")
 
     examples = sorted((ROOT / "examples").glob("*.md"))
     if len(examples) < 3:
@@ -172,7 +204,7 @@ def main() -> None:
         text = read(path)
         if "SYNTHETIC / 合成" not in text:
             fail(f"example lacks synthetic label: {path.name}")
-        if text.count("# NIUBI 赚钱点") != 1:
+        if text.count("# NIUBI 赚钱纠偏") != 1:
             fail(f"example lacks the concise single-card output: {path.name}")
         if len(text.splitlines()) > 60:
             fail(f"example is too long for the concise default output: {path.name}")
@@ -183,8 +215,8 @@ def main() -> None:
                 fail(f"example contains a prohibited real-industry/project term: {path.name}: {term}")
 
     scenarios = json.loads(read(ROOT / "tests" / "scenarios.json"))
-    if len(scenarios) < 17:
-        fail("at least seventeen behavioral scenarios are required")
+    if len(scenarios) < 25:
+        fail("at least twenty-five behavioral scenarios are required")
     ids: set[str] = set()
     for scenario in scenarios:
         if set(scenario) != {"id", "prompt", "must", "must_not"}:
@@ -192,18 +224,18 @@ def main() -> None:
         if scenario["id"] in ids:
             fail(f"duplicate scenario id: {scenario['id']}")
         ids.add(scenario["id"])
+        if not isinstance(scenario["prompt"], str) or not scenario["prompt"].strip():
+            fail(f"scenario prompt must be a non-empty string: {scenario['id']}")
+        if not isinstance(scenario["must"], list) or not isinstance(scenario["must_not"], list):
+            fail(f"scenario criteria must be lists: {scenario['id']}")
         if not scenario["must"] or not scenario["must_not"]:
             fail(f"scenario needs positive and negative criteria: {scenario['id']}")
-    required_scenarios = {
-        "T12-no-fake-price-scarcity",
-        "T13-derived-capacity-reconciles",
-        "T14-arbitrary-threshold-cannot-kill",
-        "T15-assumption-does-not-become-claim",
-        "T16-gate-the-action-not-project",
-        "T17-repeat-run-calibration",
-    }
-    if not required_scenarios.issubset(ids):
-        fail("behavior tests must cover numbers, assertions, action gating, and calibration")
+        if not all(isinstance(item, str) and item.strip() for item in scenario["must"] + scenario["must_not"]):
+            fail(f"scenario criteria must be non-empty strings: {scenario['id']}")
+    required_scenarios = {f"T{number:02d}-" for number in range(1, 26)}
+    observed_prefixes = {scenario_id[:4] for scenario_id in ids}
+    if not required_scenarios.issubset(observed_prefixes):
+        fail("behavior tests must retain stable T01-T25 scenario IDs")
 
     text_extensions = {".md", ".yaml", ".yml", ".json", ".cff", ".py", ""}
     forbidden_narrow_terms = [
