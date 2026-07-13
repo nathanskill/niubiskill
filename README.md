@@ -120,15 +120,9 @@ NIUBI Skill不保证赚钱，也不编造价格、能力、案例或客户反馈
 
 Nathan长期从事项目获客、成交与商业系统搭建：大学阶段首个内容项目获得约7万注册用户并做到垂直赛道流量第一；2025–2026年协助多个团队进入行业头部，并创建千万体量行业矩阵；现进行可信AI与金融安全研究。NIUBI Skill来自持续的一线项目判断，不是销售话术合集。
 
-以上经营经历为作者自述，不构成使用者收益证明。
-
-核心Skill完整开源。真实项目的人工判断、实验复盘和落地实施可以收费，但不是出售一份Markdown。
-
-- 网站：[niubiskill.com](https://niubiskill.com)
 - GitHub：[@nathanskill](https://github.com/nathanskill)
 - QQ：78396640
 - 微信：cncn0214
-- 方法与来源：[METHOD_SOURCES.md](METHOD_SOURCES.md)
 
 ## 测试与许可
 
