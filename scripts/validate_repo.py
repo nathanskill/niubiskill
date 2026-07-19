@@ -64,7 +64,10 @@ def main() -> None:
         SKILL / "references" / "monetization-patterns.md",
         SKILL / "references" / "commercial-loop.md",
         SKILL / "references" / "evidence-and-boundaries.md",
+        SKILL / "references" / "examples.md",
         ROOT / "tests" / "scenarios.json",
+        ROOT / "tests" / "conversations.json",
+        ROOT / "tests" / "protocol.md",
     ]
     for path in required:
         read(path)
@@ -78,8 +81,8 @@ def main() -> None:
     description = frontmatter["description"]
     if not description or len(description) > 1024 or "<" in description or ">" in description:
         fail("skill description must be non-empty, at most 1024 characters, and contain no angle brackets")
-    if len(skill_text.splitlines()) > 120:
-        fail("SKILL.md must stay under 120 lines; move optional detail to references")
+    if len(skill_text.splitlines()) > 90:
+        fail("SKILL.md must stay under 90 lines; move optional detail to references")
 
     openai_yaml = read(SKILL / "agents" / "openai.yaml")
     if '$niubiskill' not in openai_yaml:
@@ -89,6 +92,8 @@ def main() -> None:
     short_match = re.search(r'short_description:\s*"([^"]+)"', openai_yaml)
     if not short_match or not 25 <= len(short_match.group(1)) <= 64:
         fail("agents/openai.yaml short_description must be 25-64 characters")
+    if re.search(r"^instructions:\s*", openai_yaml, re.MULTILINE):
+        fail("agents/openai.yaml must use supported interface metadata, not an instructions block")
 
     readme_text = read(ROOT / "README.md")
     for snippet in (
@@ -113,6 +118,7 @@ def main() -> None:
         "references/monetization-patterns.md",
         "references/commercial-loop.md",
         "references/evidence-and-boundaries.md",
+        "references/examples.md",
     ):
         if f"]({relative})" not in skill_text:
             fail(f"SKILL.md must link to {relative}")
@@ -127,26 +133,24 @@ def main() -> None:
         "## 七天验证",
         "## 本轮暂不测试",
     )
-    if "# NIUBI 赚钱纠偏" not in skill_text:
-        fail("SKILL.md must enforce the concise NIUBI correction output")
     if any(heading in skill_text for heading in legacy_outputs):
         fail("legacy verbose output headings must not remain in SKILL.md")
-    if "**现在：** 先停" not in skill_text or "引流 / 成交 / 暂停" not in skill_text:
-        fail("SKILL.md must stop one distraction and choose one route")
     for snippet in (
-        "## 双核心",
-        "### 1. 先打断生产惯性",
-        "只有具体付款方提出明确阻塞",
-        "不默认做内容",
-        "请求当下可行的最高一级",
-        "只有第一层是收钱证据",
-        "证据值",
-        "推导值",
+        "护栏，不是固定答案、固定场景、固定模式或问卷",
+        "## 先回答，再校准",
+        "不要因为不确定就只返回问题",
+        "问题只服务于更好的判断",
+        "用户要求比较、清单、完整审计、多方案、访谈或发散时",
+        "## 连续给洞察",
+        "只讲真正发生的变化",
+        "继续 / 还有呢 / 再深一点",
+        "不要为了新颖而强行换方向",
+        "证据上限",
+        "引流 / 成交 / 暂停",
         "实验参数",
-        "不能凭空创造价格、人数、目标资格、渠道、联系人、产能或交付范围",
-        "不得擅自把软件改造成咨询、人工服务或其他新商品",
-        "不能证明整个市场",
-        "闸门只判断`下一步具体外部动作`",
+        "不编造价格、客户、能力、商品、案例、反馈、稀缺、产能、联系人、渠道权限或效果",
+        "闸门只约束当前具体动作",
+        "不强制固定模板",
     ):
         if snippet not in skill_text:
             fail(f"SKILL.md is missing a concise correction rule: {snippet}")
@@ -237,6 +241,31 @@ def main() -> None:
     if not required_scenarios.issubset(observed_prefixes):
         fail("behavior tests must retain stable T01-T25 scenario IDs")
 
+    conversations = json.loads(read(ROOT / "tests" / "conversations.json"))
+    if len(conversations) < 12:
+        fail("at least twelve intent-diverse insight-first scenarios are required")
+    conversation_ids: set[str] = set()
+    for scenario in conversations:
+        if set(scenario) != {"id", "turns", "must", "must_not"}:
+            fail(f"invalid conversation fields: {scenario.get('id', '<missing>')}")
+        if scenario["id"] in conversation_ids:
+            fail(f"duplicate conversation id: {scenario['id']}")
+        conversation_ids.add(scenario["id"])
+        if not isinstance(scenario["turns"], list) or not scenario["turns"]:
+            fail(f"conversation turns must be a non-empty list: {scenario['id']}")
+        if not all(isinstance(item, str) and item.strip() for item in scenario["turns"]):
+            fail(f"conversation turns must be non-empty strings: {scenario['id']}")
+        if not isinstance(scenario["must"], list) or not isinstance(scenario["must_not"], list):
+            fail(f"conversation criteria must be lists: {scenario['id']}")
+        if not scenario["must"] or not scenario["must_not"]:
+            fail(f"conversation needs positive and negative criteria: {scenario['id']}")
+        if not all(isinstance(item, str) and item.strip() for item in scenario["must"] + scenario["must_not"]):
+            fail(f"conversation criteria must be non-empty strings: {scenario['id']}")
+    required_conversations = {f"C{number:02d}-" for number in range(1, 13)}
+    observed_conversation_prefixes = {scenario_id[:4] for scenario_id in conversation_ids}
+    if not required_conversations.issubset(observed_conversation_prefixes):
+        fail("multi-turn tests must retain stable C01-C12 scenario IDs")
+
     text_extensions = {".md", ".yaml", ".yml", ".json", ".cff", ".py", ""}
     forbidden_narrow_terms = [
         "客户" + "经理",
@@ -259,7 +288,8 @@ def main() -> None:
 
     print(
         "PASS: niubiskill repository structure and "
-        f"{len(scenarios)} behavioral scenario specifications validated."
+        f"{len(scenarios)} single-turn plus {len(conversations)} multi-turn "
+        "behavioral scenario specifications validated."
     )
 
 

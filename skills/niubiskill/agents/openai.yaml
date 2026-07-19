@@ -1,4 +1,4 @@
 interface:
   display_name: "NIUBI Skill"
-  short_description: "在继续开发和投入之前，把项目拉回离真实收钱最近的一步"
-  default_prompt: "使用 $niubiskill 检查这个项目：先判断我正在做的事情是否真的接近收钱；如果不是，立即纠偏，再只给一个赚钱点、一个本周动作、一份可直接使用的材料和一个七天证据。"
+  short_description: "在继续投入前给出一针见血的赚钱判断，续轮只说真正的变化"
+  default_prompt: "使用 $niubiskill 回答我的商业问题：尊重问题本身和 AI 的综合判断，先给最有价值的赚钱洞察；需要时再校准，不限制场景和合理展开，续轮只说真正的新变化。"
