@@ -1,7 +1,6 @@
 NIUBI Skill
 Copyright 2026 Zhennan Yu (Nathan Yu)
 
-Official website: https://niubiskill.com
 GitHub: https://github.com/nathanskill/niubiskill
 QQ: 78396640
 WeChat: cncn0214
@@ -9,6 +8,9 @@ WeChat: cncn0214
 NIUBI Skill is an independent, clean-room implementation. References to
 third-party projects are for accurate attribution and comparison only and do
 not imply affiliation, authorization, certification, or endorsement.
+
+The only official distribution is nathanskill/niubiskill. Packages published
+under any other owner are not official.
 
 The Apache License 2.0 does not grant permission to use NIUBI Skill, 牛逼 Skill,
 or related names and marks to imply an official source or endorsement.
