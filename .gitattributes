@@ -1,0 +1,4 @@
+# 仓库 94% 的内容是 Markdown（唯一的 .py 是 CI 校验脚本），
+# 但 linguist 把 prose 类型排除在语言统计外，仓库因此被标成 Python。
+scripts/** linguist-vendored
+*.md linguist-detectable

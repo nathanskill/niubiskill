@@ -17,7 +17,7 @@ NIUBI Skill 发起人和维护者，现专注于可信AI与金融安全方向的
 
 ## 联系方式
 
-- 官网：[niubiskill.com](https://niubiskill.com)
+- 仓库：[github.com/nathanskill/niubiskill](https://github.com/nathanskill/niubiskill)
 - GitHub：[@nathanskill](https://github.com/nathanskill)
 - QQ：78396640
 - 微信：cncn0214

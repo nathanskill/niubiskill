@@ -81,6 +81,12 @@ def main() -> None:
     description = frontmatter["description"]
     if not description or len(description) > 1024 or "<" in description or ">" in description:
         fail("skill description must be non-empty, at most 1024 characters, and contain no angle brackets")
+    # parse_frontmatter splits on the first ':' only, so a ': ' inside an unquoted
+    # description still parses here while a real YAML loader raises ScannerError.
+    # Reject it explicitly so CI cannot stay green on a frontmatter that breaks
+    # every standards-compliant loader.
+    if ": " in description or description.rstrip().endswith(":"):
+        fail("skill description must not contain ': ' (breaks YAML plain scalar parsing)")
     if len(skill_text.splitlines()) > 90:
         fail("SKILL.md must stay under 90 lines; move optional detail to references")
 
