@@ -84,9 +84,11 @@ def main() -> None:
     # parse_frontmatter splits on the first ':' only, so a ': ' inside an unquoted
     # description still parses here while a real YAML loader raises ScannerError.
     # Reject it explicitly so CI cannot stay green on a frontmatter that breaks
-    # every standards-compliant loader.
-    if ": " in description or description.rstrip().endswith(":"):
-        fail("skill description must not contain ': ' (breaks YAML plain scalar parsing)")
+    # every standards-compliant loader. Quoted scalars may contain ': ' legally,
+    # so only plain (unquoted) values are checked.
+    is_quoted = len(description) >= 2 and description[0] == description[-1] and description[0] in "\"'"
+    if not is_quoted and (": " in description or description.rstrip().endswith(":")):
+        fail("skill description must not contain ': ' unless the value is quoted (breaks YAML plain scalar parsing)")
     if len(skill_text.splitlines()) > 90:
         fail("SKILL.md must stay under 90 lines; move optional detail to references")
 
