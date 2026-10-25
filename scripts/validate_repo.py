@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -193,16 +194,21 @@ def main() -> None:
     if len(examples) < 3:
         fail("at least three cross-industry synthetic examples are required")
     banned_case_terms = [
-        "Blueberry",
         "MT4",
         "MT5",
         "外汇",
         "跟单",
-        "niubang",
-        "eaxau",
-        "eaea.ai",
-        "mql0",
-        "huisucha",
+    ]
+    # Real project names are kept out of the public repository: only the length and
+    # SHA-256 of each casefolded name is stored, and every substring of that length is
+    # hashed and compared, which is the same test as `term in text`.
+    private_term_hashes = [
+        (9, "ab45e8474269b026f668d49860b36850122e18a50d5ea38f3fefdae08261865c"),
+        (7, "05009f2c9996f1fe27047259651cb71d52ea142fcf1fb778f444471a1a18a2c4"),
+        (5, "85d5ce8d82c61987f76237d2242d60d6686a12e7730971cb625218b4e387ac00"),
+        (7, "40231c46685133833701c011a7fb4abc77a17d9f7cfc0b0d628095254c1b0d16"),
+        (4, "d51badaf74f64455d1ff2622695ed37c5bc1ee50f0fbeaa52bac9c80c8135cc3"),
+        (8, "7fbe1bb2c84dfc551583905dba0fa85351a9f641443909f3fa29515088e2f1bb"),
     ]
     for path in examples:
         text = read(path)
@@ -217,6 +223,12 @@ def main() -> None:
         for term in banned_case_terms:
             if term.casefold() in text.casefold():
                 fail(f"example contains a prohibited real-industry/project term: {path.name}: {term}")
+        folded = text.casefold()
+        for length, digest in private_term_hashes:
+            for start in range(len(folded) - length + 1):
+                chunk = folded[start:start + length].encode("utf-8")
+                if hashlib.sha256(chunk).hexdigest() == digest:
+                    fail(f"example contains a prohibited real project name: {path.name}")
 
     scenarios = json.loads(read(ROOT / "tests" / "scenarios.json"))
     if len(scenarios) < 25:
